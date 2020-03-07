@@ -1,6 +1,4 @@
-import numpy as np 
 import pandas as pd 
-import seaborn as se 
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn import ensemble
@@ -17,5 +15,9 @@ X = data.drop(['id' , 'price'], axis=1)
 X_train , X_test , y_train, y_test = train_test_split(X,y, random_state=2,test_size=0.10 )
 clf = ensemble.GradientBoostingRegressor(n_estimators = 400, max_depth = 5, min_samples_split = 2,learning_rate = 0.1, loss = 'ls')
 clf.fit(X_train, y_train)
+predictions = clf.predict(X_test)
+actual = list(y_test)
 print('Accuracy = ' + str(clf.score(X_test,y_test)*100))
-
+for x in range(len(predictions)):
+    error = abs(int(actual[x] - predictions[x]))
+    print('Actual value = '+str(int(actual[x]))+' Predicted= '+str(int(predictions[x]))+' Error = '+str(error))
